@@ -6,6 +6,47 @@ from datetime import datetime
 from utils import convert_phone_number_format
 from backend import login_to_eitaa, close_browser, run_tahvil_bot_async, run_id_sender_bot_async
 
+class TextWithRightClickMenu:
+    def __init__(self, widget):
+        self.widget = widget
+        self.menu = tk.Menu(widget, tearoff=0)
+        self.menu.add_command(label="برش", command=self.cut)
+        self.menu.add_command(label="کپی", command=self.copy)
+        self.menu.add_command(label="چسباندن", command=self.paste)
+        self.menu.add_separator()
+        self.menu.add_command(label="انتخاب همه", command=self.select_all)
+
+        widget.bind("<Button-3>", self.show_menu)
+        widget.bind("<Control-a>", self.select_all_event)
+        widget.bind("<Control-x>", self.cut_event)
+        widget.bind("<Control-c>", self.copy_event)
+        widget.bind("<Control-v>", self.paste_event)
+
+    def show_menu(self, event):
+        try:
+            self.menu.tk_popup(event.x_root, event.y_root)
+        finally:
+            self.menu.grab_release()
+
+    def cut(self):
+        self.widget.event_generate("<<Cut>>")
+    def copy(self):
+        self.widget.event_generate("<<Copy>>")
+    def paste(self):
+        self.widget.event_generate("<<Paste>>")
+    def select_all(self):
+        if isinstance(self.widget, tk.Entry):
+            self.widget.select_range(0, tk.END)
+        elif isinstance(self.widget, tk.Text):
+            self.widget.tag_add("sel", "1.0", "end")
+
+    def cut_event(self, event): self.cut()
+    def copy_event(self, event): self.copy()
+    def paste_event(self, event): self.paste()
+    def select_all_event(self, event):
+        self.select_all()
+        return "break"
+
 class GuiLogger:
     def __init__(self, text_widget, app_root):
         self.text_widget = text_widget
@@ -90,7 +131,9 @@ class App(tk.Tk):
 
         self.phone_number_var = tk.StringVar(value="09012195787")
         ttk.Label(phone_frame, text=": شماره تلفن").pack(side=tk.RIGHT, padx=5)
-        ttk.Entry(phone_frame, textvariable=self.phone_number_var, width=30, justify=tk.RIGHT).pack(side=tk.LEFT, expand=True, fill=tk.X)
+        phone_entry = ttk.Entry(phone_frame, textvariable=self.phone_number_var, width=30, justify=tk.RIGHT)
+        phone_entry.pack(side=tk.LEFT, expand=True, fill=tk.X)
+        TextWithRightClickMenu(phone_entry)
 
         self.login_button = ttk.Button(self.login_frame, text="ورود", command=self.start_login_thread, style="Accent.TButton")
         self.login_button.pack(pady=20)
@@ -98,7 +141,6 @@ class App(tk.Tk):
     def _create_main_view(self):
         self.main_app_frame = ttk.Frame(self.main_container, padding="5")
 
-        # Top bar for status and logout
         top_bar = ttk.Frame(self.main_app_frame)
         top_bar.pack(fill=tk.X, padx=10, pady=5)
 
@@ -108,19 +150,16 @@ class App(tk.Tk):
         self.logout_button = ttk.Button(top_bar, text="خروج از حساب", command=self.start_logout_thread, state=tk.DISABLED)
         self.logout_button.pack(side=tk.LEFT)
 
-        # Main content area with Tabs
         self.notebook = ttk.Notebook(self.main_app_frame)
         self.notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
 
-        # Shared components
         self.log_text_widget = scrolledtext.ScrolledText(self, wrap=tk.WORD, height=8, font=("Tahoma", 9))
         self.logger = GuiLogger(self.log_text_widget, self)
+        TextWithRightClickMenu(self.log_text_widget)
 
-        # Create Tabs
         self.create_tahvil_tab()
         self.create_id_sender_tab()
 
-        # Log and Status Area (outside notebook, at the bottom)
         bottom_frame = ttk.Frame(self.main_app_frame)
         bottom_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
 
@@ -148,7 +187,6 @@ class App(tk.Tk):
         tab = ttk.Frame(self.notebook, padding="10")
         self.notebook.add(tab, text="ارسال پیام از گروه")
 
-        # Config variables
         group_name_var = tk.StringVar(value="دوپلاس")
         message_prefix_var = tk.StringVar(value="ماژیک_ساعت")
         base_dm_var = tk.StringVar(value="سلام\nخرید شما رسیده، لطفا طبق ساعتهای اعلامی در گروه، برای تحویلشون اقدام کنید. 🌺")
@@ -156,7 +194,6 @@ class App(tk.Tk):
         min_delay_var = tk.IntVar(value=3)
         max_delay_var = tk.IntVar(value=10)
 
-        # UI Layout
         config_frame = ttk.LabelFrame(tab, text="تنظیمات ربات تحویل", padding=10)
         config_frame.pack(fill=tk.X, padx=5, pady=5)
 
@@ -186,14 +223,12 @@ class App(tk.Tk):
         tab = ttk.Frame(self.notebook, padding="10")
         self.notebook.add(tab, text="ارسال پیام از اکسل")
 
-        # Config variables
         own_username_var = tk.StringVar(value="davody")
         direct_message_var = tk.StringVar(value="سلام\nممنون که توی گروه ما عضو شدین.\nخبرای خوبی تو راهه. 🌺.")
         excel_path_var = tk.StringVar()
         min_delay_var = tk.IntVar(value=5)
         max_delay_var = tk.IntVar(value=15)
 
-        # UI Layout
         config_frame = ttk.LabelFrame(tab, text="تنظیمات ربات ارسال مستقیم", padding=10)
         config_frame.pack(fill=tk.X, padx=5, pady=5)
 
@@ -204,7 +239,9 @@ class App(tk.Tk):
         excel_frame.grid(row=2, column=0, columnspan=2, sticky="ew", pady=5)
         ttk.Label(excel_frame, text=": مسیر فایل اکسل").pack(side=tk.RIGHT)
         ttk.Button(excel_frame, text="انتخاب فایل...", command=lambda: self.browse_excel(excel_path_var)).pack(side=tk.LEFT)
-        ttk.Entry(excel_frame, textvariable=excel_path_var, justify=tk.RIGHT).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
+        entry_excel = ttk.Entry(excel_frame, textvariable=excel_path_var, justify=tk.RIGHT)
+        entry_excel.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
+        TextWithRightClickMenu(entry_excel)
 
         create_entry(config_frame, "حداقل تاخیر (ثانیه)", min_delay_var, 3)
         create_entry(config_frame, "حداکثر تاخیر (ثانیه)", max_delay_var, 4)
@@ -296,7 +333,7 @@ class App(tk.Tk):
             return
 
         button.config(state=tk.DISABLED)
-        self.logout_button.config(state=tk.DISABLED) # Disable logout during bot run
+        self.logout_button.config(state=tk.DISABLED)
         self.logger.log(f"شروع عملیات ربات: {bot_function.__name__}")
 
         self.bot_thread = threading.Thread(target=self.run_bot, args=(bot_function, config, button), daemon=True)
@@ -323,7 +360,6 @@ class App(tk.Tk):
         if self.browser:
             if messagebox.askyesno("خروج", "آیا می‌خواهید از حساب خود خارج شده و برنامه را ببندید؟"):
                 self.start_logout_thread()
-                # Wait a moment for logout to initiate before destroying
                 self.after(1000, self.destroy)
         else:
             self.destroy()
@@ -333,14 +369,15 @@ def create_entry(parent, label, var, row, is_text_area=False, height=3):
     if is_text_area:
         widget = tk.Text(parent, height=height, wrap=tk.WORD, font=("Tahoma", 9))
         widget.insert("1.0", var.get())
+        TextWithRightClickMenu(widget)
         widget.grid(row=row, column=0, padx=5, pady=5, sticky="ew")
-        parent.grid_columnconfigure(0, weight=1)
-        return widget
     else:
         widget = ttk.Entry(parent, textvariable=var, justify=tk.RIGHT)
+        TextWithRightClickMenu(widget)
         widget.grid(row=row, column=0, padx=5, pady=5, sticky="ew")
-        parent.grid_columnconfigure(0, weight=1)
-        return widget
+
+    parent.grid_columnconfigure(0, weight=1)
+    return widget
 
 if __name__ == '__main__':
     app = App()
