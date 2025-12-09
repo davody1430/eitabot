@@ -277,7 +277,7 @@ class App(tk.Tk):
         self.id_sender_start_button.config(state=tk.NORMAL)
 
     def start_login_thread(self):
-        phone_number = self.phone_number_var.get()
+        phone_number = self.phone_number_var.get().strip()
         converted_phone = convert_phone_number_format(phone_number)
         if not (converted_phone and converted_phone.startswith('989') and len(converted_phone) == 13):
             messagebox.showerror("خطا", "فرمت شماره تلفن صحیح نیست. مثال: 09123456789")
