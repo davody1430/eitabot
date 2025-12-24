@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 راهنمای جامع استفاده از فرستیار - پنل مدیریت ایتا</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-left-color: #667eea;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .highlight-box {
+            background: linear-gradient(to right, #f0f4ff, #fdf2ff);
+            border-right: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .tip-box {
+            background: #fff9db;
+            border-right: 4px solid #ffd43b;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .warning-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+    </style>
+</head>
+
+<body class="text-gray-800 bg-gradient-to-b from-gray-50 to-white min-h-screen">
+    <header class="gradient-bg text-white p-6 shadow-2xl sticky top-0 z-50">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="bg-white p-3 rounded-xl text-2xl text-indigo-600 shadow-lg">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold">فِرِستیار پیشرفته</h1>
+                        <p class="text-indigo-100 mt-1">🎯 پنل جامع مدیریت و اتوماسیون ایتا</p>
+                    </div>
+                </div>
+                
+                <nav class="flex gap-4">
+                    <a href="/" class="bg-white text-indigo-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fa-solid fa-play"></i>
+                        شروع کار
+                    </a>
+                    <a href="https://eitaa.com/Davody" target="_blank" class="bg-indigo-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fa-solid fa-headset"></i>
+                        پشتیبانی
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-8 px-4 pb-16">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">🚀 به دنیای اتوماسیون هوشمند ایتا خوش آمدید!</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                فرستیار ابزاری قدرتمند برای <span class="text-indigo-600 font-bold">مدیریت حرفه‌ای</span> حساب‌های ایتا، 
+                <span class="text-green-600 font-bold">ارسال هوشمند</span> پیام‌ها و 
+                <span class="text-purple-600 font-bold">مدیریت کارآمد</span> مخاطبین است.
+            </p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 text-center">
+                <div class="text-3xl text-blue-600 mb-2"><i class="fa-solid fa-robot"></i></div>
+                <div class="text-2xl font-bold text-gray-800">۴+ ابزار</div>
+                <div class="text-gray-600 text-sm">قابلیت هوشمند</div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 text-center">
+                <div class="text-3xl text-green-600 mb-2"><i class="fa-solid fa-database"></i></div>
+                <div class="text-2xl font-bold text-gray-800">دیتابیس</div>
+                <div class="text-gray-600 text-sm">ذخیره هوشمند</div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 text-center">
+                <div class="text-3xl text-purple-600 mb-2"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="text-2xl font-bold text-gray-800">امنیت</div>
+                <div class="text-gray-600 text-sm">حساب شما محفوظ</div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 text-center">
+                <div class="text-3xl text-orange-600 mb-2"><i class="fa-solid fa-bolt"></i></div>
+                <div class="text-2xl font-bold text-gray-800">سرعت بالا</div>
+                <div class="text-gray-600 text-sm">عملیات بهینه</div>
+            </div>
+        </div>
+
+        <!-- Critical Warning -->
+        <div id="security" class="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-500 text-red-800 p-8 rounded-2xl shadow-xl mb-12 warning-pulse">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="text-5xl text-red-600">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-2xl mb-3 text-red-700">⚠️ هشدار امنیتی فوق‌العاده مهم</h3>
+                    <p class="text-lg leading-relaxed mb-3">
+                        <span class="font-bold underline">ایتا به شدت با فعالیت‌های رباتیک و ارسال انبوه مخالفت می‌کند!</span>
+                        هرگونه بی‌احتیاطی می‌تواند منجر به <span class="font-bold text-red-700">مسدود شدن دائمی حساب</span> شما شود.
+                    </p>
+                    <div class="bg-white p-4 rounded-xl border border-red-200 mt-4">
+                        <h4 class="font-bold text-red-700 mb-2">🔒 توصیه‌های طلایی امنیتی:</h4>
+                        <ul class="space-y-2 text-red-700">
+                            <li class="flex items-center"><i class="fa-solid fa-clock ml-2"></i> تاخیر بین ارسال‌ها را کمتر از ۷ ثانیه تنظیم نکنید</li>
+                            <li class="flex items-center"><i class="fa-solid fa-users ml-2"></i> از ارسال پیام انبوه در ساعات اوج کاربران خودداری کنید</li>
+                            <li class="flex items-center"><i class="fa-solid fa-shield ml-2"></i> نام کاربری خودتان را در تنظیمات وارد کنید تا ربات به خودتان پاسخ ندهد</li>
+                            <li class="flex items-center"><i class="fa-solid fa-scale-balanced ml-2"></i> مسئولیت کامل استفاده از این ابزار بر عهده شماست</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start Guide -->
+        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl shadow-lg mb-12 border border-indigo-100">
+            <h3 class="text-2xl font-bold text-indigo-800 mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-bolt"></i>
+                راهنمای شروع سریع در ۳ مرحله
+            </h3>
+            
+            <div class="space-y-8">
+                <!-- Step 1 -->
+                <div class="flex items-start gap-4">
+                    <div class="step-number">۱</div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-lg text-gray-800 mb-2">ورود به حساب ایتا</h4>
+                        <p class="text-gray-700">
+                            شماره موبایل خود را در قسمت بالای صفحه وارد کرده و روی دکمه "ورود / اتصال" کلیک کنید.
+                            سپس کد ۵ رقمی ارسال شده از ایتا را وارد نمایید.
+                        </p>
+                        <div class="tip-box mt-3">
+                            <i class="fa-solid fa-lightbulb text-yellow-500 ml-2"></i>
+                            برای عملکرد بهتر، از نسخه دسکتاپ ایتا (web.eitaa.com) در مرورگر استفاده کنید.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="flex items-start gap-4">
+                    <div class="step-number">۲</div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-lg text-gray-800 mb-2">انتخاب ابزار مورد نیاز</h4>
+                        <p class="text-gray-700">
+                            بر اساس نیاز خود یکی از قابلیت‌های زیر را انتخاب کنید:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+                            <div class="bg-white p-3 rounded-lg border border-blue-200">
+                                <div class="text-blue-600 font-bold mb-1"><i class="fa-solid fa-magnifying-glass ml-1"></i> ربات تحویل</div>
+                                <div class="text-xs text-gray-600">برای پاسخگویی خودکار در گروه‌ها</div>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-green-200">
+                                <div class="text-green-600 font-bold mb-1"><i class="fa-solid fa-file-excel ml-1"></i> ارسال اکسل</div>
+                                <div class="text-xs text-gray-600">برای ارسال انبوه از لیست</div>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-purple-200">
+                                <div class="text-purple-600 font-bold mb-1"><i class="fa-solid fa-user-plus ml-1"></i> افزودن مخاطبین</div>
+                                <div class="text-xs text-gray-600">برای اضافه کردن مخاطبین جدید</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="flex items-start gap-4">
+                    <div class="step-number">۳</div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-lg text-gray-800 mb-2">تنظیمات و شروع عملیات</h4>
+                        <p class="text-gray-700">
+                            تنظیمات مورد نیاز را وارد کرده و عملیات را شروع کنید. پیشرفت کار را در بخش گزارش‌ها مشاهده نمایید.
+                        </p>
+                        <div class="highlight-box mt-3">
+                            <i class="fa-solid fa-star text-yellow-500 ml-2"></i>
+                            <span class="font-bold">نکته حرفه‌ای:</span> همیشه قبل از شروع عملیات اصلی، با یک آزمون کوچک (تست با ۲-۳ کاربر) از صحت عملکرد اطمینان حاصل کنید.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <h3 id="features" class="text-3xl font-bold text-center text-gray-900 mb-10">
+            <i class="fa-solid fa-gem text-indigo-600 ml-2"></i>
+            قابلیت‌های شگفت‌انگیز فرستیار
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            
+            <!-- Feature 1: Delivery Bot -->
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl text-xl">
+                        <i class="fa-solid fa-magnifying-glass-location"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800">ربات تحویل هوشمند</h4>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    رباتی که در گروه‌های ایتا به دنبال پیام‌های حاوی منشن می‌گردد و به صورت خودکار پاسخ می‌دهد.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> جستجوی هوشمند در گروه‌های بزرگ</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> شناسایی خودکار کاربران منشن شده</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> ارسال پاسخ شخصی‌سازی شده</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> جلوگیری از پاسخ به خودتان</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+                        <i class="fa-solid fa-robot ml-1"></i> مناسب برای: پشتیبانی، فروش، اطلاع‌رسانی
+                    </span>
+                </div>
+            </div>
+
+            <!-- Feature 2: Excel Sender -->
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-green-100 text-green-600 p-3 rounded-xl text-xl">
+                        <i class="fa-solid fa-file-excel"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800">ارسال انبوه از اکسل</h4>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    لیست مخاطبین خود را از طریق اکسل آپلود کنید و به هزاران کاربر به صورت خودکار پیام ارسال کنید.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> پشتیبانی از فرمت‌های XLSX و XLS</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> پردازش هزاران رکورد در دقیقه</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> تنظیم تاخیر هوشمند بین ارسال‌ها</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> گزارش‌گیری دقیق از نتایج</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
+                        <i class="fa-solid fa-chart-line ml-1"></i> مناسب برای: مارکتینگ، خبرنامه، اطلاع‌رسانی
+                    </span>
+                </div>
+            </div>
+
+            <!-- Feature 3: Contacts Manager -->
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-purple-100 text-purple-600 p-3 rounded-xl text-xl">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800">مدیریت هوشمند مخاطبین</h4>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    مخاطبین جدید را از اکسل اضافه کنید. سیستم به طور خودکار تکراری‌ها را شناسایی می‌کند.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> شناسایی و حذف خودکار تکراری‌ها</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> فرمت‌دهی هوشمند شماره‌های تلفن</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> افزودن خودکار به ایتا</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> گزارش‌گیری از نتایج افزودن</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
+                        <i class="fa-solid fa-users ml-1"></i> مناسب برای: رشد مخاطبین، CRM، مدیریت لیست
+                    </span>
+                </div>
+            </div>
+
+            <!-- Feature 4: Database Management -->
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-teal-100 text-teal-600 p-3 rounded-xl text-xl">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800">دیتابیس قدرتمند</h4>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    تمام فعالیت‌های شما در یک دیتابیس امن ذخیره می‌شود تا همیشه به تاریخچه کامل دسترسی داشته باشید.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> ذخیره تمام مخاطبین اضافه شده</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> ثبت کامل گزارش‌های ارسال</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> آمار و نمودارهای پیشرفته</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> خروجی‌گیری در فرمت‌های مختلف</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-xs bg-teal-100 text-teal-700 px-3 py-1 rounded-full font-medium">
+                        <i class="fa-solid fa-chart-pie ml-1"></i> مناسب برای: تحلیل، گزارش‌گیری، آرشیو
+                    </span>
+                </div>
+            </div>
+
+            <!-- Feature 5: Templates & Reports -->
+            <div class="feature-card bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-orange-100 text-orange-600 p-3 rounded-xl text-xl">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800">پیام‌ها و گزارش‌های پیشرفته</h4>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    متن‌های پرکاربرد را ذخیره کنید و گزارش‌های دقیقی از تمام عملیات‌ها دریافت نمایید.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> کتابخانه پیام‌های آماده</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> گزارش‌گیری با جزئیات کامل</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> خروجی اکسل از نتایج</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> تحلیل موفقیت/شکست ارسال‌ها</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-medium">
+                        <i class="fa-solid fa-file-contract ml-1"></i> مناسب برای: مدیریت محتوا، کنترل کیفیت
+                    </span>
+                </div>
+            </div>
+
+            <!-- Feature 6: Smart Settings -->
+            <div id="settings" class="feature-card bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-red-100 text-red-600 p-3 rounded-xl text-xl">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <h4 class="font-bold text-xl text-gray-800">تنظیمات هوشمند</h4>
+                </div>
+                <p class="text-gray-700 mb-4">
+                    تمام پارامترهای ربات را به دلخواه تنظیم کنید تا مطابق نیاز شما عمل کند.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> تنظیم تاخیر هوشمند ارسال</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> تعیین نام کاربری خودتان</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> مدیریت امنیت و حریم خصوصی</li>
+                    <li class="flex items-center"><i class="fa-solid fa-check text-green-500 ml-2"></i> تنظیمات پیشرفته عملکرد</li>
+                </ul>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-full font-medium">
+                        <i class="fa-solid fa-gear ml-1"></i> مناسب برای: شخصی‌سازی، بهینه‌سازی
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Excel Templates Guide -->
+        <div id="excel-guide" class="bg-gradient-to-r from-gray-50 to-blue-50 p-8 rounded-2xl shadow-lg mb-12 border border-blue-100">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-file-excel text-green-600"></i>
+                📊 راهنمای فرمت فایل‌های اکسل
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Excel for Sending -->
+                <div class="bg-white p-6 rounded-xl border border-green-200">
+                    <h4 class="font-bold text-lg text-green-700 mb-4">
+                        <i class="fa-solid fa-paper-plane ml-2"></i>
+                        فرمت ارسال پیام
+                    </h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-gray-300 text-sm">
+                            <thead class="bg-green-50">
+                                <tr>
+                                    <th class="border border-gray-300 p-2 text-right">ستون A</th>
+                                    <th class="border border-gray-300 p-2 text-right">توضیحات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-300 p-2 font-mono">@username1</td>
+                                    <td class="border border-gray-300 p-2">نام کاربری ایتا با @</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2 font-mono">@username2</td>
+                                    <td class="border border-gray-300 p-2">هر سطر یک کاربر</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2 font-mono">...</td>
+                                    <td class="border border-gray-300 p-2">بدون سطر هدر</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <i class="fa-solid fa-download ml-2"></i>
+                        <a href="templates/ID.xlsx" class="text-blue-600 hover:underline font-bold" download>
+                            دانلود نمونه فایل اکسل ارسال (ID.xlsx)
+                        </a>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Excel for Contacts -->
+                <div class="bg-white p-6 rounded-xl border border-purple-200">
+                    <h4 class="font-bold text-lg text-purple-700 mb-4">
+                        <i class="fa-solid fa-user-plus ml-2"></i>
+                        فرمت افزودن مخاطبین
+                    </h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-gray-300 text-sm">
+                            <thead class="bg-purple-50">
+                                <tr>
+                                    <th class="border border-gray-300 p-2 text-right">ستون A</th>
+                                    <th class="border border-gray-300 p-2 text-right">ستون B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-300 p-2">نام و نام خانوادگی</td>
+                                    <td class="border border-gray-300 p-2">09123456789</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2 font-mono text-xs">(متن آزاد)</td>
+                                    <td class="border border-gray-300 p-2 font-mono text-xs">(11 رقم بدون +)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <i class="fa-solid fa-download ml-2"></i>
+                        <a href="templates/CONTACT.xlsx" class="text-blue-600 hover:underline font-bold" download>
+                            دانلود نمونه فایل اکسل مخاطبین (CONTACT.xlsx)
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                <h5 class="font-bold text-yellow-800 mb-2 flex items-center">
+                    <i class="fa-solid fa-lightbulb text-yellow-500 ml-2"></i>
+                    نکات مهم درباره فایل‌های اکسل
+                </h5>
+                <ul class="text-sm text-yellow-700 space-y-1">
+                    <li>• فایل‌ها باید در فرمت .xlsx یا .xls باشند</li>
+                    <li>• از کاراکترهای غیراستاندارد در نام فایل استفاده نکنید</li>
+                    <li>• حداکثر حجم فایل: ۵ مگابایت</li>
+                    <li>• حداکثر تعداد سطر: ۱۰,۰۰۰ رکورد</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <h3 id="faq" class="text-3xl font-bold text-center text-gray-900 mb-10">
+            <i class="fa-solid fa-circle-question text-indigo-600 ml-2"></i>
+            سوالات متداول کاربران
+        </h3>
+        
+        <div class="space-y-6 mb-16 max-w-4xl mx-auto">
+            
+            <!-- FAQ 1 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="collapse-header bg-gradient-to-r from-gray-50 to-indigo-50 p-5" onclick="toggleCollapse(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg text-gray-800">
+                            <i class="fa-solid fa-key text-indigo-600 ml-2"></i>
+                            ۱. چگونه با ایتا وارد شوم و خطر مسدود شدن را کاهش دهم؟
+                        </span>
+                        <i class="fa-solid fa-chevron-down collapse-icon text-indigo-600"></i>
+                    </div>
+                </div>
+                <div class="collapse-content p-6 bg-white">
+                    <p class="text-gray-700 mb-4">
+                        <span class="font-bold text-green-600">مراحل امن ورود:</span>
+                    </p>
+                    <ol class="list-decimal mr-6 space-y-3 text-gray-700">
+                        <li>شماره موبایل خود را در قسمت بالای صفحه وارد کنید</li>
+                        <li>روی دکمه "ورود / اتصال" کلیک کنید</li>
+                        <li>کد ۵ رقمی ارسال شده از ایتا را وارد نمایید</li>
+                        <li>برای کاهش خطر مسدود شدن:
+                            <ul class="list-disc mr-6 mt-2 space-y-1 text-gray-600">
+                                <li>تاخیر بین ارسال‌ها را حداقل ۷ ثانیه تنظیم کنید</li>
+                                <li>در هر ساعت حداکثر ۵۰ پیام ارسال کنید</li>
+                                <li>از ارسال در ساعات ۱۰ شب تا ۸ صبح خودداری کنید</li>
+                                <li>هر ۲ ساعت ۱۵ دقیقه استراحت به ربات دهید</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="collapse-header bg-gradient-to-r from-gray-50 to-green-50 p-5" onclick="toggleCollapse(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg text-gray-800">
+                            <i class="fa-solid fa-database text-green-600 ml-2"></i>
+                            ۲. دیتابیس چه اطلاعاتی را ذخیره می‌کند و چگونه از آن استفاده کنم؟
+                        </span>
+                        <i class="fa-solid fa-chevron-down collapse-icon text-green-600"></i>
+                    </div>
+                </div>
+                <div class="collapse-content p-6 bg-white">
+                    <p class="text-gray-700 mb-4">
+                        دیتابیس فرستیار دو نوع اطلاعات اصلی ذخیره می‌کند:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-bold text-gray-800 mb-2">📇 مخاطبین</h5>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• نام و نام خانوادگی</li>
+                                <li>• شماره تلفن</li>
+                                <li>• تاریخ اضافه شدن</li>
+                                <li>• شناسه اپراتور</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-bold text-gray-800 mb-2">📊 گزارش‌ها</h5>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• آی‌دی کاربران</li>
+                                <li>• وضعیت ارسال</li>
+                                <li>• زمان ارسال</li>
+                                <li>• نوع عملیات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 tip-box">
+                        <i class="fa-solid fa-lightbulb text-yellow-500 ml-2"></i>
+                        <span class="font-bold">نکته:</span> می‌توانید از تب "مدیریت دیتابیس" خروجی اکسل بگیرید یا داده‌های قدیمی را پاک کنید.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="collapse-header bg-gradient-to-r from-gray-50 to-blue-50 p-5" onclick="toggleCollapse(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg text-gray-800">
+                            <i class="fa-solid fa-file-excel text-blue-600 ml-2"></i>
+                            ۳. چگونه فایل اکسل خود را آماده کنم و خطاهای رایج چیست؟
+                        </span>
+                        <i class="fa-solid fa-chevron-down collapse-icon text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="collapse-content p-6 bg-white">
+                    <p class="text-gray-700 mb-4">
+                        <span class="font-bold text-blue-600">راهنمای آماده‌سازی اکسل:</span>
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h6 class="font-bold text-blue-700 mb-2">✅ کارهایی که باید انجام دهید:</h6>
+                            <ul class="text-sm text-blue-600 space-y-1">
+                                <li>• از فرمت XLSX یا XLS استفاده کنید</li>
+                                <li>• ستون اول را با داده‌های خود پر کنید</li>
+                                <li>• برای مخاطبین: ستون A=نام، ستون B=شماره (۱۱ رقم)</li>
+                                <li>• سطر اول را خالی بگذارید یا عنوان نگذارید</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h6 class="font-bold text-red-700 mb-2">❌ خطاهای رایج و راه حل:</h6>
+                            <ul class="text-sm text-red-600 space-y-1">
+                                <li>• خطا: "فایل خوانده نشد" → فرمت فایل را به XLSX تغییر دهید</li>
+                                <li>• خطا: "داده‌ای یافت نشد" → مطمئن شوید ستون اول پر است</li>
+                                <li>• خطا: "شماره تلفن نامعتبر" → شماره را به فرمت 09123456789 وارد کنید</li>
+                                <li>• خطا: "یوزرنیم نامعتبر" → مطمئن شوید @ در ابتدا قرار دارد</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="collapse-header bg-gradient-to-r from-gray-50 to-purple-50 p-5" onclick="toggleCollapse(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg text-gray-800">
+                            <i class="fa-solid fa-user-shield text-purple-600 ml-2"></i>
+                            ۴. چگونه امنیت حساب ایتا خود را افزایش دهم؟
+                        </span>
+                        <i class="fa-solid fa-chevron-down collapse-icon text-purple-600"></i>
+                    </div>
+                </div>
+                <div class="collapse-content p-6 bg-white">
+                    <p class="text-gray-700 mb-4">
+                        <span class="font-bold text-purple-600">استراتژی‌های طلایی امنیت:</span>
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h6 class="font-bold text-gray-700 mb-2">🛡️ اقدامات پیشگیرانه:</h6>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-shield-alt text-green-500 ml-2 mt-1"></i>
+                                    <span>همیشه از تنظیمات تاخیر پیش‌فرض استفاده کنید</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-user-clock text-blue-500 ml-2 mt-1"></i>
+                                    <span>ربات را در ساعات غیرشلوغ (صبح زود) اجرا کنید</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-pause-circle text-yellow-500 ml-2 mt-1"></i>
+                                    <span>هر ۱۰۰ پیام، ۱۰ دقیقه به ربات استراحت دهید</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6 class="font-bold text-gray-700 mb-2">🚨 هنگام بروز مشکل:</h6>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-stop-circle text-red-500 ml-2 mt-1"></i>
+                                    <span>اگر پیام "محدود شده‌اید" دیدید، بلافاصله متوقف کنید</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-mobile-alt text-purple-500 ml-2 mt-1"></i>
+                                    <span>۲۴ ساعت از ایتا خارج شوید و دوباره امتحان کنید</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-history text-orange-500 ml-2 mt-1"></i>
+                                    <span>تاخیرها را ۲ برابر کنید و حجم ارسال را کاهش دهید</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-purple-50 p-4 rounded-lg">
+                        <i class="fa-solid fa-exclamation-triangle text-purple-600 ml-2"></i>
+                        <span class="font-bold text-purple-700">یادآوری مهم:</span>
+                        <span class="text-purple-600 text-sm">توسعه‌دهندگان فرستیار مسئول مسدود شدن حساب شما نیستند. استفاده منطقی و مسئولانه داشته باشید.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="collapse-header bg-gradient-to-r from-gray-50 to-teal-50 p-5" onclick="toggleCollapse(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg text-gray-800">
+                            <i class="fa-solid fa-rocket text-teal-600 ml-2"></i>
+                            ۵. چگونه از تمام قابلیت‌ها به صورت حرفه‌ای استفاده کنم؟
+                        </span>
+                        <i class="fa-solid fa-chevron-down collapse-icon text-teal-600"></i>
+                    </div>
+                </div>
+                <div class="collapse-content p-6 bg-white">
+                    <p class="text-gray-700 mb-4">
+                        <span class="font-bold text-teal-600">راهنمای حرفه‌ای استفاده:</span>
+                    </p>
+                    <div class="space-y-4">
+                        <div class="bg-teal-50 p-4 rounded-lg">
+                            <h6 class="font-bold text-teal-700 mb-2">🎯 استراتژی ترکیبی:</h6>
+                            <p class="text-sm text-teal-600">
+                                می‌توانید از چند قابلیت به صورت همزمان استفاده کنید. مثلاً:
+                            </p>
+                            <ol class="list-decimal mr-6 mt-2 text-sm text-teal-700">
+                                <li>مخاطبین جدید را از اکسل اضافه کنید</li>
+                                <li>به آن‌ها پیام خوشامدگویی ارسال کنید</li>
+                                <li>در گروه‌های تخصصی پاسخگو باشید</li>
+                                <li>همه فعالیت‌ها را در دیتابیس ذخیره کنید</li>
+                                <li>هر ماه گزارش عملکرد تهیه کنید</li>
+                            </ol>
+                        </div>
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <h6 class="font-bold text-indigo-700 mb-2">💡 نکات طلایی:</h6>
+                            <ul class="text-sm text-indigo-600 space-y-2">
+                                <li>
+                                    <i class="fa-solid fa-check-circle text-green-500 ml-2"></i>
+                                    <span class="font-bold">پیام‌های پیش‌فرض:</span> برای صرفه‌جویی در زمان، ۱۰-۱۵ پیام آماده داشته باشید
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-check-circle text-green-500 ml-2"></i>
+                                    <span class="font-bold">تنظیمات شخصی:</span> نام کاربری خودتان را حتماً وارد کنید
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-check-circle text-green-500 ml-2"></i>
+                                    <span class="font-bold">گزارش‌گیری:</span> هفته‌ای یکبار گزارش‌ها را بررسی و تحلیل کنید
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-check-circle text-green-500 ml-2"></i>
+                                    <span class="font-bold">پشتیبان‌گیری:</span> ماهی یکبار از دیتابیس خروجی بگیرید
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Final CTA -->
+        <div class="text-center bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-12 rounded-3xl shadow-2xl mb-8">
+            <div class="max-w-2xl mx-auto">
+                <i class="fa-solid fa-rocket text-5xl mb-6"></i>
+                <h3 class="text-3xl font-bold mb-4">آماده‌اید تبدیل به یک حرفه‌ای ایتا شوید؟</h3>
+                <p class="text-xl mb-8 opacity-90">
+                    با فرستیار، مدیریت حساب ایتا را به سطح جدیدی ببرید. صرفه‌جویی در زمان، افزایش بهره‌وری و نتایج شگفت‌انگیز در انتظار شماست!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/" class="bg-white text-indigo-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <i class="fa-solid fa-play ml-2"></i>
+                        شروع کار با فرستیار
+                    </a>
+                    <a href="https://eitaa.com/Davody" target="_blank" class="bg-indigo-800 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-indigo-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <i class="fa-solid fa-question-circle ml-2"></i>
+                        سوال دارید؟ بپرسید
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-900 text-white pt-12 pb-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-bold text-xl mb-4 text-indigo-300">فرستیار</h4>
+                    <p class="text-gray-400 text-sm">
+                        ابزاری قدرتمند برای مدیریت هوشمند حساب‌های ایتا. افزایش بهره‌وری، صرفه‌جویی در زمان و نتایج قابل اندازه‌گیری.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-4 text-indigo-300">لینک‌های سریع</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/" class="hover:text-white transition"><i class="fa-solid fa-arrow-left ml-2"></i> صفحه اصلی</a></li>
+                        <li><a href="#features" class="hover:text-white transition"><i class="fa-solid fa-star ml-2"></i> قابلیت‌ها</a></li>
+                        <li><a href="#faq" class="hover:text-white transition"><i class="fa-solid fa-question ml-2"></i> سوالات متداول</a></li>
+                        <li><a href="#security" class="hover:text-white transition"><i class="fa-solid fa-shield-alt ml-2"></i> نکات امنیتی</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-4 text-indigo-300">راهنمایی‌ها</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#excel-guide" class="hover:text-white transition"><i class="fa-solid fa-file-excel ml-2"></i> راهنمای اکسل</a></li>
+                        <li><a href="#settings" class="hover:text-white transition"><i class="fa-solid fa-sliders ml-2"></i> تنظیمات بهینه</a></li>
+                        <li><a href="/templates/ID.xlsx" download class="hover:text-white transition"><i class="fa-solid fa-download ml-2"></i> نمونه فایل ارسال</a></li>
+                        <li><a href="/templates/CONTACT.xlsx" download class="hover:text-white transition"><i class="fa-solid fa-download ml-2"></i> نمونه فایل مخاطبین</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xl mb-4 text-indigo-300">تماس با پشتیبانی</h4>
+                    <div class="space-y-3 text-gray-400">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-headset text-indigo-400 ml-2"></i>
+                            <span>کانال ایتا: <a href="https://eitaa.com/Davody" target="_blank" class="text-indigo-300 hover:text-white">@Davody</a></span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-exclamation-triangle text-yellow-400 ml-2"></i>
+                            <span class="text-sm">پاسخگویی: ۱۰ صبح تا ۱۰ شب</span>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <div class="text-xs text-gray-500">
+                            <i class="fa-solid fa-shield-halved ml-1"></i>
+                            استفاده مسئولانه داشته باشید
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2023 فرستیار - تمامی حقوق محفوظ است. 
+                    <span class="block mt-2 text-xs text-gray-600">
+                        این ابزار برای افزایش بهره‌وری در ایتا طراحی شده است. استفاده نادرست ممکن است منجر به مسدود شدن حساب شود.
+                    </span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * تابع برای باز و بسته کردن بخش‌های جمع‌شونده (Collapse)
+         * @param {HTMLElement} headerElement - المان هدر (دکمه) بخش جمع‌شونده
+         */
+        function toggleCollapse(headerElement) {
+            const content = headerElement.nextElementSibling;
+            
+            headerElement.classList.toggle('active');
+            content.classList.toggle('active');
+
+            if (content.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + 40 + "px";
+            } else {
+                content.style.maxHeight = "0";
+            }
+        }
+
+        // افزودن اسکرول نرم به لینک‌های داخلی
+        document.addEventListener('DOMContentLoaded', function() {
+            // برای تمام لینک‌های داخلی
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if(targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // برای لینک‌های فوتر که ممکن است شامل سایر لینک‌ها هم باشند
+            document.querySelectorAll('footer a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if(targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 120,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

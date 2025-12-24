@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت ارسال گروهی به ایتا | فرستیار</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+
+    <!-- هدر حرفه‌ای -->
+    <header class="header-container py-4 px-6 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="logo-container">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-3 rounded-2xl shadow-lg float-animation">
+                                <i class="fa-solid fa-paper-plane text-xl"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">فِرِستیار <span class="text-xs font-normal bg-gradient-to-r from-green-500 to-teal-500 text-white px-2 py-1 rounded-full">PRO</span></h1>
+                                <p class="text-sm text-gray-500 mt-1">سیستم هوشمند مدیریت ارسال گروهی ایتا</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center gap-2">
+                        <span class="status-badge px-3 py-1 rounded-full text-xs font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>دیتابیس فعال</span>
+                        </span>
+                        <div class="h-4 w-px bg-gray-300"></div>
+                        <span class="text-xs text-gray-500">
+                            <i class="fa-solid fa-clock ml-1"></i>
+                            <span id="current-time">--:--</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="relative group">
+                        <a href="help.html" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-300 shadow-sm hover:shadow-md border border-gray-200">
+                            <i class="fa-solid fa-circle-question text-indigo-600"></i>
+                            <span class="font-medium text-gray-700">مرکز راهنما</span>
+                        </a>
+                        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-white p-3 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-gray-100">
+                            <p class="text-xs text-gray-600 text-center">مستندات و راهنمای کامل استفاده از سیستم</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-2 shadow-inner">
+                        <div class="relative">
+                            <i class="fa-solid fa-mobile-screen-button absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="phone" placeholder="09123456789" class="bg-transparent border-none text-sm w-36 pl-10 pr-3 py-2 outline-none dir-ltr placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-indigo-200">
+                        </div>
+                        
+                        <button onclick="startAction('login')" class="btn-primary flex items-center gap-2">
+                            <i class="fa-solid fa-plug"></i>
+                            <span class="hidden sm:inline">اتصال به ایتا</span>
+                        </button>
+                        
+                        <div class="flex flex-col border-r border-gray-300 pr-3">
+                            <span id="login_status" class="text-xs font-bold text-orange-600">آماده</span>
+                            <span class="text-xs text-gray-500">وضعیت</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- بخش OTP -->
+    <div id="otp_section" class="hidden bg-gradient-to-r from-amber-100 to-yellow-100 border-b border-amber-300 p-4 shadow-lg">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-gradient-to-br from-amber-500 to-orange-500 text-white p-3 rounded-xl shadow-lg">
+                        <i class="fa-solid fa-key text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-amber-900">تایید دو مرحله‌ای</h3>
+                        <p class="text-sm text-amber-700">کد ۵ رقمی ارسال شده از ایتا را وارد کنید</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <input id="otp_code" type="text" maxlength="5" class="border-2 border-amber-500 rounded-xl p-4 w-32 text-center text-2xl font-bold tracking-widest outline-none shadow-lg bg-white dir-ltr focus:ring-2 focus:ring-amber-300">
+                        <div class="absolute top-1/2 left-3 transform -translate-y-1/2 text-amber-400">
+                            <i class="fa-solid fa-keyboard"></i>
+                        </div>
+                    </div>
+                    <button onclick="sendOTP()" class="btn-primary bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600">
+                        تایید و ادامه
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- محتوای اصلی -->
+    <main class="max-w-7xl mx-auto p-4 md:p-6 mt-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- نوار نویگیشن عمودی -->
+            <div class="lg:col-span-2">
+                <div class="sidebar-nav p-4">
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-gray-500 mb-3 px-2">منوی اصلی</h3>
+                        <div class="space-y-2">
+                            <button onclick="openTab(event, 'dashboard')" class="nav-item active w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-gauge-high nav-icon text-indigo-500"></i>
+                                    <span>داشبورد</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-indigo-500"></i>
+                            </button>
+                            
+                            <button onclick="openTab(event, 'tahvil')" class="nav-item w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-robot nav-icon text-blue-500"></i>
+                                    <span>ربات تحویل</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-blue-500"></i>
+                            </button>
+                            
+                            <button onclick="openTab(event, 'excel_bot')" class="nav-item w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-file-excel nav-icon text-green-500"></i>
+                                    <span>ارسال اکسل</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-green-500"></i>
+                            </button>
+                            
+                            <button onclick="openTab(event, 'add_contacts')" class="nav-item w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-user-plus nav-icon text-purple-500"></i>
+                                    <span>افزودن مخاطبین</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-purple-500"></i>
+                            </button>
+                            
+                            <button onclick="openTab(event, 'ready_messages')" class="nav-item w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-message nav-icon text-amber-500"></i>
+                                    <span>پیام‌های پیش‌فرض</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-amber-500"></i>
+                            </button>
+                            
+                            <button onclick="openTab(event, 'dispatch_report')" class="nav-item w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-chart-line nav-icon text-teal-500"></i>
+                                    <span>گزارش ارسال</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-teal-500"></i>
+                            </button>
+                            
+                            <button onclick="openTab(event, 'database_management')" class="nav-item w-full text-right p-3 flex items-center justify-between group">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-database nav-icon text-gray-600"></i>
+                                    <span>مدیریت دیتابیس</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-left text-xs text-gray-400 group-hover:text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-gray-100">
+                        <h3 class="text-sm font-bold text-gray-500 mb-3 px-2">سیستم</h3>
+                        <div class="space-y-2">
+                            <button onclick="openTab(event, 'general_settings')" class="nav-item w-full text-right p-3 flex items-center gap-3 group">
+                                <i class="fa-solid fa-sliders nav-icon text-gray-500"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                            
+                            <div class="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs font-bold text-blue-800">CPU</p>
+                                        <p class="text-xs text-blue-600">45% استفاده</p>
+                                    </div>
+                                    <div class="w-10 h-10 relative">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e6e6e6" stroke-width="3"/>
+                                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#3b82f6" stroke-width="3" stroke-dasharray="45, 100"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- کارت آمار سریع -->
+                <div class="card-modern mt-6 p-4">
+                    <h4 class="font-bold text-gray-700 mb-3">آمار لحظه‌ای</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">مخاطبین امروز</span>
+                            <span class="font-bold text-green-600">+24</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">پیام‌های ارسالی</span>
+                            <span class="font-bold text-blue-600">1,248</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">نرخ موفقیت</span>
+                            <span class="font-bold text-purple-600">94%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- محتوای اصلی (8 تب) -->
+            <div class="lg:col-span-10">
+                <!-- تب داشبورد -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="main-content p-6">
+                        <div class="flex justify-between items-center mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-800 shimmer-text">داشبورد مدیریت</h2>
+                                <p class="text-gray-600 mt-2">بررسی جامع عملکرد و آمار سیستم</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button onclick="loadDatabaseStats()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-300">
+                                    <i class="fa-solid fa-rotate text-gray-600"></i>
+                                    <span class="text-sm font-medium text-gray-700">بروزرسانی</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- کارت‌های آماری -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            <div class="card-modern p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-sm text-gray-500">کل مخاطبین</p>
+                                        <h3 class="text-2xl font-bold mt-2 text-gray-800" id="total_contacts">0</h3>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i class="fa-solid fa-users text-blue-600 text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fa-solid fa-arrow-up text-green-500 ml-1"></i>
+                                        <span class="text-green-600">+12% نسبت به ماه قبل</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-modern p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-sm text-gray-500">پیام‌های ارسالی</p>
+                                        <h3 class="text-2xl font-bold mt-2 text-gray-800" id="total_messages">0</h3>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i class="fa-solid fa-paper-plane text-green-600 text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fa-solid fa-bolt text-amber-500 ml-1"></i>
+                                        <span class="text-amber-600">امروز: 0 پیام</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-modern p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-sm text-gray-500">نرخ موفقیت</p>
+                                        <h3 class="text-2xl font-bold mt-2 text-gray-800" id="success_rate">0%</h3>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i class="fa-solid fa-chart-pie text-purple-600 text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fa-solid fa-star text-yellow-500 ml-1"></i>
+                                        <span class="text-yellow-600">بسیار عالی</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-modern p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-sm text-gray-500">وضعیت سیستم</p>
+                                        <h3 class="text-2xl font-bold mt-2 text-green-600">فعال</h3>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl">
+                                        <i class="fa-solid fa-circle-check text-teal-600 text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fa-solid fa-plug text-blue-500 ml-1"></i>
+                                        <span class="text-blue-600">همه سرویس‌ها فعال</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- لاگ‌ها و آمار دیتابیس -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- کنسول لاگ -->
+                            <div class="card-modern">
+                                <div class="card-header p-4 rounded-t-2xl">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                            <i class="fa-solid fa-terminal text-green-500"></i>
+                                            کنسول عملیات
+                                        </h3>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="clearLogs()" class="text-xs px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition">
+                                                پاک کردن
+                                            </button>
+                                            <span class="text-xs text-gray-500">آخرین بروزرسانی: <span id="last_update">همین حالا</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="logs-container p-4 h-80 overflow-y-auto">
+                                    <div id="logs" class="space-y-1">
+                                        <div class="log-entry p-2 text-green-400">
+                                            <span class="text-cyan-300">[SYSTEM]</span> سیستم راه‌اندازی شد. منتظر دستورات...
+                                        </div>
+                                        <div class="log-entry p-2 text-gray-400">
+                                            <span class="text-yellow-300">[INFO]</span> دیتابیس با موفقیت متصل شد
+                                        </div>
+                                        <div class="log-entry p-2 text-blue-400">
+                                            <span class="text-purple-300">[READY]</span> همه سرویس‌ها آماده به کار هستند
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- آمار دیتابیس -->
+                            <div class="card-modern">
+                                <div class="card-header p-4 rounded-t-2xl">
+                                    <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-database text-indigo-500"></i>
+                                        آمار دیتابیس
+                                    </h3>
+                                </div>
+                                <div id="database_stats" class="p-5">
+                                    <div class="text-center py-8">
+                                        <div class="inline-block relative">
+                                            <i class="fa-solid fa-spinner fa-spin text-3xl text-gray-300"></i>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <i class="fa-solid fa-database text-xl text-gray-400"></i>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-4">در حال بارگذاری آمار دیتابیس...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تب ربات تحویل -->
+                <div id="tahvil" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-6">
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 text-sm text-blue-800 font-medium shadow-sm">
+                            <i class="fa-solid fa-circle-info ml-2"></i> ربات، پیامهای یک گروه که منشن داشته باشند را پیدا می‌کند و به آی‌دی افراد پیام می‌دهد.
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">نام دقیق گروه در ایتا:</label>
+                            <input type="text" id="group_name" placeholder="مثال: فروشگاه مرکزی" class="w-full p-3 shadow-inner rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">جستجوی کلیدواژه در ابتدای پیام:</label>
+                            <input type="text" id="keyword" placeholder="مثال: واریز_سفارش_۵۲" class="w-full p-3 shadow-inner rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2 flex items-center justify-between">
+                                متن پیام ارسالی (پاسخ خصوصی):
+                                <button onclick="openMessageSelectModal('tahvil_msg')" class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-xs font-medium hover:bg-indigo-200 transition shadow-sm">
+                                    <i class="fa-solid fa-list-check ml-1"></i> انتخاب از پیام‌های ذخیره شده
+                                </button>
+                            </label>
+                            <textarea id="tahvil_msg" class="w-full p-3 h-32 resize-y shadow-inner rounded-xl" placeholder="متن پیام شما..."></textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold mb-2">حداقل تاخیر (ثانیه):</label>
+                                <input type="number" id="min_delay" value="7" class="w-full p-3 text-center shadow-inner rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">حداکثر تاخیر (ثانیه):</label>
+                                <input type="number" id="max_delay" value="12" class="w-full p-3 text-center shadow-inner rounded-xl">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2">نام کاربری خودتان (اختیاری):</label>
+                            <input type="text" id="your_own_username" placeholder="مثال: MyEitaaBot (بدون @)" class="w-full p-3 shadow-inner rounded-xl">
+                        </div>
+                        <button onclick="startAction('tahvil')" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-blue-300 hover:bg-blue-700 transition">
+                            <i class="fa-solid fa-play ml-2"></i> شروع عملیات استخراج و ارسال
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تب ارسال اکسل -->
+                <div id="excel_bot" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-6">
+                        <div class="border-2 border-dashed border-gray-300 p-8 rounded-2xl text-center hover:border-green-500 transition duration-300 bg-gray-50">
+                            <input type="file" id="excel_file" class="hidden" onchange="uploadFile()" accept=".xlsx, .xls">
+                            <button onclick="document.getElementById('excel_file').click()" class="bg-gray-800 text-white px-8 py-3 rounded-xl hover:bg-gray-900 transition mb-3 font-bold shadow-md">
+                                <i class="fa-solid fa-file-excel ml-2"></i> انتخاب فایل اکسل مخاطبین
+                            </button>
+                            <p id="file_info" class="text-sm text-gray-600">آی دی‌ها (مانند @username) باید در ستون اول فایل اکسل باشند.</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2 flex items-center justify-between">
+                                متن پیام ارسالی به لیست اکسل:
+                                <button onclick="openMessageSelectModal('excel_msg')" class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-xs font-medium hover:bg-indigo-200 transition shadow-sm">
+                                    <i class="fa-solid fa-list-check ml-1"></i> انتخاب از پیام‌های ذخیره شده
+                                </button>
+                            </label>
+                            <textarea id="excel_msg" class="w-full p-3 h-32 resize-y shadow-inner rounded-xl" placeholder="متن پیام شما..."></textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold mb-2">حداقل تاخیر (ثانیه):</label>
+                                <input type="number" id="min_delay_excel" value="7" class="w-full p-3 text-center shadow-inner rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2">حداکثر تاخیر (ثانیه):</label>
+                                <input type="number" id="max_delay_excel" value="12" class="w-full p-3 text-center shadow-inner rounded-xl">
+                            </div>
+                        </div>
+                        <button onclick="startAction('excel')" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-green-300 hover:bg-green-700 transition">
+                            <i class="fa-solid fa-paper-plane ml-2"></i> ارسال پیام به لیست اکسل
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تب افزودن مخاطبین -->
+                <div id="add_contacts" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-6">
+                        <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 text-sm text-purple-800 font-medium shadow-sm">
+                            <i class="fa-solid fa-circle-info ml-2"></i> 
+                            با استفاده از این قابلیت می‌توانید مخاطبین را از طریق فایل اکسل به ایتا اضافه کنید. 
+                            <span class="font-bold text-green-600">سیستم به طور خودکار مخاطبین تکراری را شناسایی و از افزودن مجدد آنها جلوگیری می‌کند.</span>
+                            فایل اکسل باید دو ستون داشته باشد: ستون A (نام و نام خانوادگی) و ستون B (شماره موبایل با فرمت 9123456789)
+                        </div>
+                        
+                        <div class="border-2 border-dashed border-gray-300 p-8 rounded-2xl text-center hover:border-purple-500 transition duration-300 bg-gray-50">
+                            <input type="file" id="contacts_excel_file" class="hidden" onchange="uploadContactsFile()" accept=".xlsx, .xls">
+                            <button onclick="document.getElementById('contacts_excel_file').click()" class="bg-purple-600 text-white px-8 py-3 rounded-xl hover:bg-purple-700 transition mb-3 font-bold shadow-md">
+                                <i class="fa-solid fa-file-excel ml-2"></i> انتخاب فایل اکسل مخاطبین
+                            </button>
+                            <p id="contacts_file_info" class="text-sm text-gray-600">
+                                فرمت فایل: ستون A = نام و نام خانوادگی، ستون B = شماره موبایل (9123456789)
+                            </p>
+                        </div>
+                        
+                        <div class="bg-gray-100 p-4 rounded-xl border border-gray-200">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-bold text-gray-700">پیش‌نمایش مخاطبین:</h4>
+                                <div class="flex gap-2">
+                                    <span id="duplicate_badge" class="hidden bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full">
+                                        <i class="fa-solid fa-clone ml-1"></i> <span id="duplicate_count">0</span> تکراری
+                                    </span>
+                                    <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full">
+                                        <i class="fa-solid fa-user-plus ml-1"></i> <span id="contacts_count">0</span> جدید
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="contacts_preview" class="h-40 overflow-y-auto p-3 bg-white rounded-lg border">
+                                <div class="text-sm text-gray-500 text-center py-2">هنوز فایلی بارگذاری نشده است.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button onclick="startAddContacts()" class="flex-1 bg-purple-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-purple-300 hover:bg-purple-700 transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-user-plus"></i>
+                                شروع عملیات افزودن مخاطبین
+                            </button>
+                            <button onclick="clearContactsList()" class="bg-gray-200 text-gray-700 px-6 py-4 rounded-xl font-bold hover:bg-gray-300 transition">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                        
+                        <div id="contacts_progress_container" class="hidden bg-gray-50 p-4 rounded-xl border">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-700">پیشرفت عملیات:</span>
+                                <span id="contacts_progress_text" class="text-sm font-bold text-purple-600">0/0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="contacts_progress_bar" class="bg-purple-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <div id="contacts_status" class="text-xs text-gray-600 mt-2 text-center">در حال آماده‌سازی...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تب پیام‌های پیش‌فرض -->
+                <div id="ready_messages" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-4">
+                        <h3 class="font-bold text-lg mb-4 text-indigo-700 border-b pb-2">مدیریت پیام‌های پیش‌فرض</h3>
+                        <div class="bg-gray-50 p-4 rounded-xl text-sm text-gray-700">
+                            <i class="fa-solid fa-lightbulb ml-2"></i> این بخش صرفاً برای ذخیره متن‌های پرکاربرد شما است و در عملیات خودکار استفاده نمی‌شود.
+                        </div>
+                        <div id="ready_messages_list" class="space-y-3 p-2 border rounded-xl bg-white">
+                            <div class="text-sm text-gray-500 text-center py-2">پیام‌های ذخیره‌شده اینجا نمایش داده می‌شوند...</div>
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <input type="text" id="new_ready_msg" placeholder="افزودن پیام جدید..." class="flex-1 p-3 rounded-xl shadow-inner">
+                            <button onclick="addReadyMsg()" class="bg-indigo-500 text-white px-6 rounded-xl text-lg font-bold hover:bg-indigo-600 transition shadow-md">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تب تنظیمات عمومی -->
+                <div id="general_settings" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-6">
+                        <h3 class="font-bold text-lg mb-4 text-indigo-700 border-b pb-2">
+                            <i class="fa-solid fa-sliders"></i> تنظیمات عمومی ربات
+                        </h3>
+                        
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200 text-sm text-red-800 font-medium shadow-sm">
+                            <i class="fa-solid fa-triangle-exclamation ml-2"></i> اگر نام کاربری خودتان را وارد نکنید، ربات ممکن است به پیام‌هایی که خودتان در گروه ارسال کرده‌اید نیز پاسخ دهد.
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 p-4 border rounded-xl bg-gray-50">
+                            <div class="col-span-3 lg:col-span-1">
+                                <label class="block text-sm font-bold mb-2">نام کاربری شما (بدون @)</label>
+                                <input type="text" id="your_own_username" placeholder="مثال: MyEitaaBot" class="w-full p-3 shadow-inner rounded-xl">
+                            </div>
+                            
+                            <div class="col-span-3 sm:col-span-1">
+                                <label class="block text-sm font-bold mb-2">حداقل تاخیر (ثانیه)</label>
+                                <input type="number" id="min_delay" value="7" class="w-full p-3 text-center shadow-inner rounded-xl">
+                            </div>
+                            
+                            <div class="col-span-3 sm:col-span-1">
+                                <label class="block text-sm font-bold mb-2">حداکثر تاخیر (ثانیه)</label>
+                                <input type="number" id="max_delay" value="14" class="w-full p-3 text-center shadow-inner rounded-xl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تب گزارش ارسال -->
+                <div id="dispatch_report" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-6">
+                        <div class="flex justify-between items-center mb-4 border-b pb-4">
+                            <h3 class="font-bold text-lg text-indigo-700">
+                                <i class="fa-solid fa-file-invoice"></i> گزارش ارسال عملیات
+                            </h3>
+                            <div class="flex gap-3">
+                                <button onclick="exportAllReport()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition shadow-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                    دانلود گزارش کامل
+                                </button>
+                                <button onclick="exportIdsOnly()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-list"></i>
+                                    فقط لیست آی‌دی‌ها
+                                </button>
+                                <button onclick="clearReport()" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-200 transition shadow-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                    پاک کردن
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="report_summary" class="bg-gray-100 p-3 rounded-xl text-sm font-medium text-gray-700 border border-gray-200">
+                            وضعیت کلی: گزارشی یافت نشد.
+                        </div>
+                
+                        <div class="overflow-x-auto shadow-md rounded-xl border">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider w-1/3">آی دی کاربر (@Username)</th>
+                                        <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider w-1/6">وضعیت</th>
+                                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider w-1/2">توضیحات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report_table_body" class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td colspan="3" class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">در حال بارگذاری گزارش...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تب مدیریت دیتابیس -->
+                <div id="database_management" class="tab-content hidden">
+                    <div class="main-content p-6 space-y-6">
+                        <h3 class="font-bold text-lg mb-4 text-indigo-700 border-b pb-2">
+                            <i class="fa-solid fa-database"></i> مدیریت دیتابیس
+                        </h3>
+                        
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 text-sm text-blue-800 font-medium shadow-sm">
+                            <i class="fa-solid fa-circle-info ml-2"></i> 
+                            دیتابیس به طور خودکار مخاطبین اضافه شده و گزارش‌های ارسال را ذخیره می‌کند.
+                            این اطلاعات به شما کمک می‌کند تا از افزودن مخاطبین تکراری جلوگیری کنید و تاریخچه کاملی از فعالیت‌های خود داشته باشید.
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <h4 class="font-bold text-gray-700 mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-users text-green-600"></i>
+                                    مدیریت مخاطبین
+                                </h4>
+                                <p class="text-sm text-gray-600 mb-4">مخاطبین اضافه شده قبلی در دیتابیس ذخیره می‌شوند.</p>
+                                <div class="space-y-3">
+                                    <button onclick="exportContactsCSV()" class="w-full bg-green-100 text-green-700 py-3 rounded-lg font-medium hover:bg-green-200 transition flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-file-export"></i>
+                                        خروجی گرفتن از مخاطبین
+                                    </button>
+                                    <button onclick="clearDatabaseTable('contacts')" class="w-full bg-red-50 text-red-700 py-3 rounded-lg font-medium hover:bg-red-100 transition flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-trash"></i>
+                                        پاک کردن جدول مخاطبین
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                                <h4 class="font-bold text-gray-700 mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-line text-blue-600"></i>
+                                    مدیریت گزارش‌ها
+                                </h4>
+                                <p class="text-sm text-gray-600 mb-4">گزارش‌های ارسال در دیتابیس ذخیره می‌شوند.</p>
+                                <div class="space-y-3">
+                                    <button onclick="loadDatabaseStats()" class="w-full bg-blue-100 text-blue-700 py-3 rounded-lg font-medium hover:bg-blue-200 transition flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-chart-bar"></i>
+                                        مشاهده آمار کامل
+                                    </button>
+                                    <button onclick="clearDatabaseTable('reports')" class="w-full bg-red-50 text-red-700 py-3 rounded-lg font-medium hover:bg-red-100 transition flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-trash"></i>
+                                        پاک کردن جدول گزارش‌ها
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-xl border border-yellow-200">
+                            <h4 class="font-bold text-yellow-800 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                عملیات خطرناک
+                            </h4>
+                            <p class="text-sm text-yellow-700 mb-3">
+                                این عملیات تمام داده‌های دیتابیس را حذف می‌کند و قابل بازگشت نیست.
+                                قبل از انجام مطمئن شوید که از داده‌های مهم خروجی گرفته‌اید.
+                            </p>
+                            <button onclick="clearEntireDatabase()" class="w-full bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-bomb"></i>
+                                پاک کردن کامل دیتابیس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- مودال‌ها -->
+    <div id="edit_modal" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-[100] hidden justify-center items-center">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-lg mx-4">
+            <h4 class="font-bold text-lg mb-4 border-b pb-2 text-indigo-700">ویرایش پیام ذخیره‌شده</h4>
+            
+            <input type="hidden" id="edit_index">
+            
+            <label class="block text-sm font-medium mb-1">متن پیام (می‌توانید Enter بزنید):</label>
+            <textarea id="edit_textarea" class="w-full p-3 h-40 border rounded-xl shadow-inner resize-y focus:ring-blue-500 outline-none"></textarea>
+            
+            <div class="flex justify-end gap-3 mt-4">
+                <button onclick="document.getElementById('edit_modal').classList.add('hidden'); document.getElementById('edit_modal').classList.remove('flex');" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-xl font-bold hover:bg-gray-300 transition">
+                    لغو
+                </button>
+                <button onclick="saveEditedMessage()" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700 transition">
+                    ذخیره تغییرات
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="select_msg_modal" class="fixed inset-0 bg-gray-900 bg-opacity-70 z-[101] hidden justify-center items-center">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-xl mx-4">
+            <h4 class="font-bold text-lg mb-4 border-b pb-2 text-indigo-700">
+                <i class="fa-solid fa-list-check ml-1"></i> انتخاب پیام پیش‌فرض
+            </h4>
+            
+            <input type="hidden" id="target_msg_id"> 
+            
+            <div id="available_ready_messages" class="h-80 overflow-y-auto space-y-3 p-2 border rounded-xl bg-gray-50">
+                <div class="text-sm text-gray-500 text-center py-2">در حال بارگذاری...</div>
+            </div>
+            
+            <div class="flex justify-end mt-4">
+                <button onclick="document.getElementById('select_msg_modal').classList.add('hidden'); document.getElementById('select_msg_modal').classList.remove('flex');" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-xl font-bold hover:bg-gray-300 transition">
+                    بستن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- اسکریپت‌های سفارشی -->
+    <script>
+        // تابع بروزرسانی زمان
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('fa-IR');
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        // بروزرسانی هر ثانیه
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // تابع مدیریت تب‌ها
+        function openTab(evt, tabName) {
+            // مخفی کردن تمام تب‌ها
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('active');
+            });
+            
+            // غیرفعال کردن تمام آیتم‌های نویگیشن
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // نمایش تب انتخاب شده
+            document.getElementById(tabName).classList.remove('hidden');
+            document.getElementById(tabName).classList.add('active');
+            
+            // فعال کردن آیتم نویگیشن
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
+            
+            // بروزرسانی عنوان صفحه
+            const tabTitles = {
+                'dashboard': 'داشبورد',
+                'tahvil': 'ربات تحویل',
+                'excel_bot': 'ارسال اکسل',
+                'add_contacts': 'افزودن مخاطبین',
+                'ready_messages': 'پیام‌های پیش‌فرض',
+                'dispatch_report': 'گزارش ارسال',
+                'database_management': 'مدیریت دیتابیس',
+                'general_settings': 'تنظیمات عمومی'
+            };
+            
+            document.title = `مدیریت ارسال گروهی به ایتا | ${tabTitles[tabName] || 'فرستیار'}`;
+            
+            // اجرای توابع خاص هنگام تغییر تب
+            if (tabName === 'ready_messages') {
+                loadReadyMessages();
+            } else if (tabName === 'dispatch_report') {
+                loadDispatchReport(); 
+            } else if (tabName === 'database_management') {
+                loadDatabaseStats();
+            }
+        }
+        
+        // تابع آپلود فایل اکسل
+        async function uploadFile() {
+            const fileInput = document.getElementById('excel_file');
+            const fileInfo = document.getElementById('file_info');
+            
+            if (!fileInput.files[0]) return;
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            fileInfo.textContent = 'در حال آپلود فایل...';
+            
+            try {
+                const response = await fetch('/upload-excel', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    fileInfo.textContent = `فایل ${data.filename} با ${data.count} کاربر آپلود شد.`;
+                } else {
+                    fileInfo.textContent = 'خطا در آپلود فایل: ' + data.message;
+                }
+            } catch (error) {
+                fileInfo.textContent = 'خطا در ارتباط با سرور';
+            }
+        }
+        
+        // تابع پاک کردن لاگ‌ها
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '<div>> لاگ‌ها پاک شدند.</div>';
+        }
+        
+        // تغییر استایل هدر هنگام اسکرول
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header-container');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', () => {
+            // فعال‌سازی تب داشبورد به صورت پیش‌فرض
+            const dashboardTab = document.querySelector('.nav-item.active');
+            if (dashboardTab) {
+                openTab(null, 'dashboard');
+            }
+            
+            // بارگذاری آمار اولیه
+            setTimeout(() => {
+                loadDatabaseStats();
+            }, 1500);
+        });
+    </script>
+    
+    <!-- Custom JavaScript -->
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
