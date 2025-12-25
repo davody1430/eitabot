@@ -46,7 +46,7 @@ async function startAction(mode) {
 
     // برای عملیات دیگر
     const formData = new FormData();
-    formData.append('phone', phone);
+    formData.append('phone_number', phone);
     formData.append('mode', mode);
     
     if (mode === 'tahvil') {
@@ -79,7 +79,8 @@ async function startAction(mode) {
     }
 
     try {
-        const response = await fetch('/start', {
+        const endpoint = mode === 'login' ? '/login' : '/start';
+        const response = await fetch(endpoint, {
             method: 'POST', 
             body: formData
         });

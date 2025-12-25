@@ -119,13 +119,14 @@ app.router.lifespan_context = lifespan
 async def get_index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/status")
+@app.get("/get-status")
 async def get_status():
+    # This endpoint provides status updates to the frontend.
     return JSONResponse({
         "bot_running": bot_running,
-        "browser_open": automation_instance is not None and automation_instance.driver is not None,
-        "base_dir": BASE_DIR,
-        "exe_dir": EXE_DIR
+        "otp_required": False,  # Placeholder, can be improved later
+        "current_step": "در حال اجرا..." if bot_running else "آماده",
+        "logs": []  # Placeholder, can be improved later
     })
 
 def run_eitaa_automation(phone_number):
