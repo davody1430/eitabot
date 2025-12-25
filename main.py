@@ -57,6 +57,7 @@ class MessageData(BaseModel):
 # ================== متغیرهای Global ==================
 automation_instance = None
 bot_running = False
+otp_needed = False
 
 # ================== توابع کمکی ==================
 def get_log_file_path():
@@ -121,25 +122,30 @@ async def get_index(request: Request):
 
 @app.get("/get-status")
 async def get_status():
-    # This endpoint provides status updates to the frontend.
+    global otp_needed
     return JSONResponse({
         "bot_running": bot_running,
-        "otp_required": False,  # Placeholder, can be improved later
-        "current_step": "در حال اجرا..." if bot_running else "آماده",
-        "logs": []  # Placeholder, can be improved later
+        "otp_required": otp_needed,
+        "current_step": "در انتظار کد تایید..." if otp_needed else ("در حال اجرا..." if bot_running else "آماده"),
+        "logs": []
     })
 
 def run_eitaa_automation(phone_number):
-    global automation_instance, bot_running
+    global automation_instance, bot_running, otp_needed
     bot_running = True
+    otp_needed = False
     try:
         automation_instance = EitaaAutomation(phone_number)
         if automation_instance.setup_driver():
-            automation_instance.login_to_eitaa()
+            result = automation_instance.login_to_eitaa()
+            if result.get("status") == "otp_required":
+                otp_needed = True
     except Exception as e:
-        print(f"Error in Eitaa automation thread: {e}")
+        logger.error(f"Error in Eitaa automation thread: {e}", exc_info=True)
     finally:
-        bot_running = False
+        # If OTP is needed, the bot is still in a "running" state
+        if not otp_needed:
+            bot_running = False
 
 @app.post("/login")
 async def post_login(phone_number: str = Form(...)):
@@ -152,6 +158,14 @@ async def post_login(phone_number: str = Form(...)):
 
     return JSONResponse({"status": "success", "message": "فرآیند اتصال به ایتا آغاز شد."})
 
+@app.post("/submit-otp")
+async def submit_otp(code: str = Form(...)):
+    global automation_instance
+    if not automation_instance or not automation_instance.driver:
+        return JSONResponse({"status": "error", "message": "ربات آماده نیست. لطفاً ابتدا شماره تلفن را وارد کنید."})
+
+    result = automation_instance.submit_otp(code)
+    return JSONResponse(result)
 
 @app.post("/send_message")
 async def post_send_message(data: MessageData):
