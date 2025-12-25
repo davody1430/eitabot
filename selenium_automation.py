@@ -65,9 +65,11 @@ class EitaaAutomation:
             except:
                 logger.info("Not logged in. Proceeding with login flow.")
 
-            logger.info("Looking for phone number input field...")
-            phone_input = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='tel']")))
-            logger.info("Phone number input found. Sending keys...")
+            logger.info("Waiting for phone number input field to be clickable...")
+            phone_input = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[type='tel']")))
+            logger.info("Phone number input found. Clearing and sending keys...")
+            phone_input.clear()
+            time.sleep(0.5)  # Short delay for stability
             phone_input.send_keys(self.phone_number)
 
             logger.info("Looking for submit button...")
